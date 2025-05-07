@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
-from scripts import Binder_Pdf  # Supondo que seu código esteja em binder.py
+from scripts import Binder_Pdf
 import uuid
 from pathlib import Path
 
@@ -9,9 +9,10 @@ app = FastAPI()
 @app.post("/generate-pdf/")
 def generate_pdf(
     state: str = Form(...),
+    city: str = Form(...),
+    zip_code: str = Form(...),
     full_name: str = Form(...),
     address: str = Form(...),
-    city_state_zip: str = Form(...),
     new_policy_start_date: str = Form(...),
     vehicle_year: str = Form(...),
     vehicle_make: str = Form(...),
@@ -22,6 +23,11 @@ def generate_pdf(
     lien_address: str = Form(""),
     lien_city_state_zip: str = Form(""),
 ):
+    
+    city_state_zip = (f"{city} {state} {zip_code}").upper()
+
+
+
     binder = Binder_Pdf(
         state, full_name, address, city_state_zip, new_policy_start_date,
         vehicle_year, vehicle_make, vehicle_model, vehicle_vin,
