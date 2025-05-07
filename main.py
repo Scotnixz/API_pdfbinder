@@ -22,10 +22,8 @@ def generate_pdf(
     lien_address: str = Form(""),
     lien_city_state_zip: str = Form(""),
 ):
-    
+    first_name = full_name.strip().split()[0].upper()
     city_state_zip = (f"{city} {state} {zip_code}").upper()
-
-
 
     binder = Binder_Pdf(
         state, full_name, address, city_state_zip, new_policy_start_date,
@@ -34,10 +32,9 @@ def generate_pdf(
     )
 
     binder.insert_info()
-
     output_dir = Path("output_pdfs")
     output_dir.mkdir(exist_ok=True)
-    file_name = output_dir / f"binder{full_name[0]}.pdf"
+    file_name = output_dir / f"binder{first_name}.pdf"
     binder.salvar(file_name)
 
     return FileResponse(path=file_name, filename="generated_policy.pdf", media_type="application/pdf")
