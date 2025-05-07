@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from scripts import Binder_Pdf
-import uuid
 from pathlib import Path
 
 app = FastAPI()
@@ -38,7 +37,7 @@ def generate_pdf(
 
     output_dir = Path("output_pdfs")
     output_dir.mkdir(exist_ok=True)
-    file_name = output_dir / f"{uuid.uuid4()}.pdf"
+    file_name = output_dir / f"binder{full_name[0]}.pdf"
     binder.salvar(file_name)
 
     return FileResponse(path=file_name, filename="generated_policy.pdf", media_type="application/pdf")
