@@ -76,13 +76,13 @@ def generate_pdf(
 
         logger.info(f"Iniciando geração de PDFs para: {full_name}")
 
-        # Criar diretório temporário para trabalhar
+        # Cria diretório temporário
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
             pdfs_gerados = []
 
             try:
-                # Gerar o PDF do Binder
+                # Gera o PDF do Binder
                 logger.info("Gerando PDF do Binder...")
                 binder = Binder_Pdf(
                     state, full_name, address, city_state_zip, new_policy_start_date,
@@ -103,7 +103,6 @@ def generate_pdf(
                 logger.error(f"Erro ao gerar Binder PDF: {e}")
                 raise HTTPException(status_code=500, detail=f"Erro ao gerar PDF do Binder: {str(e)}")
 
-            # Gerar PDFs de Garaging Proof (caso solicitado)
             if garaging_proof:
                 try:
                     logger.info("Gerando PDFs de Garaging Proof...")
@@ -111,7 +110,6 @@ def generate_pdf(
                         state, full_name, address, city_state_zip, new_policy_start_date
                     )
                     
-                    # Assumindo que a classe tem atributos bill_1 e bill_2
                     garaging_file_1 = temp_path / f"{garaging.bill_1}_{first_name}.pdf"
                     garaging_file_2 = temp_path / f"{garaging.bill_2}_{first_name}.pdf"
                     
@@ -126,14 +124,13 @@ def generate_pdf(
                         logger.info(f"Garaging Proof 2 gerado: {garaging_file_2}")
 
                 except Exception as e:
-                    logger.error(f"Erro ao gerar Garaging Proof PDFs: {e}")
-                    # Não vamos falhar completamente, apenas logar o erro
+                    logger.error(f"Erro ao gerar Garaging Proof PDFs: {e}") # Aqui não falha completamente, só loga o erro.
                     logger.warning("Continuando sem os PDFs de Garaging Proof")
 
             if not pdfs_gerados:
                 raise HTTPException(status_code=500, detail="Nenhum PDF foi gerado com sucesso")
 
-            # Criar arquivo ZIP final (fora do tempdir para persistir)
+            # Cria arquivo ZIP final
             temp_zip = tempfile.NamedTemporaryFile(delete=False, suffix='.zip', prefix=f'{first_name}_docs_')
             temp_zip.close()
 
@@ -146,7 +143,7 @@ def generate_pdf(
 
                 logger.info(f"ZIP criado com sucesso: {temp_zip.name}")
                 
-                # Agendar limpeza do arquivo após o download
+                # Limpeza do arquivo
                 background_tasks.add_task(cleanup_file, temp_zip.name)
 
                 return FileResponse(
@@ -165,7 +162,6 @@ def generate_pdf(
                 raise HTTPException(status_code=500, detail=f"Erro ao criar arquivo ZIP: {str(e)}")
 
     except HTTPException:
-        # Re-raise HTTPExceptions
         raise
     except Exception as e:
         logger.error(f"Erro inesperado: {e}")
@@ -178,3 +174,15 @@ async def not_found_handler(request, exc):
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
     return {"error": "Erro interno do servidor", "detail": "Tente novamente mais tarde"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    # Render define a variável PORT automaticamente
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=port,
+        log_level="info"
+    )
