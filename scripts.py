@@ -215,7 +215,8 @@ class GaragingProof(Pdfs):
                 "account_number2": f"77051{account_number_var6}{account_number_var2}",
                 "account_number_ocr": f"77051{account_number_var6}{account_number_var2} 0000246875 000015021{account_number_var2}",
             }
-            full_name_width_font = fitz.Font(fontfile=".\\fonts\\helv_bold.ttf")
+            
+            full_name_width_font = fitz.Font(fontfile=f"{FONT_DIR}\helv_bold.ttf")
             full_name_width = full_name_width_font.text_length(full_name.upper(), fontsize=9 )
             x_right = 560
             correct_xy = ((x_right - full_name_width), 32)
