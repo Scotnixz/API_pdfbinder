@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 CORDS_BINDER = {
 "FL": {
     "full_name": {"pos": (36.0, 122.4), "fontsize": 8},
@@ -238,15 +241,18 @@ CORDS_BINDER = {
     "issued_date": {"pos": (90, 540.5 - 15 + 61.5 + 54), "fontsize": 10},
 },
 }
-fonts = {"xfinity-regular": "fonts\\XfinityBrown-Regular.ttf",
-         "xfinity-bold": "fonts\\XfinityBrown-Bold.ttf",
-         "xfinity-light": "fonts\\XfinityBrown-Light.ttf",
-         "ocr": "fonts\\OCRAST.ttf",
-         "swis721BT": "fonts\\swiss721bt.ttf",
-         "swis721BT-Bold": "fonts\\swiss721bold.ttf",
-         "helv": "fonts\\Helvetica.ttf",
-         "helv_bold" : "fonts\\helv_bold.ttf",
-         
+
+FONT_DIR = Path(__file__).parent / "fonts" #Tive que adicionar um caminho variável
+
+fonts = {
+    "xfinity-regular": FONT_DIR / "XfinityBrown-Regular.ttf",
+    "xfinity-bold": FONT_DIR / "XfinityBrown-Bold.ttf",
+    "xfinity-light": FONT_DIR / "XfinityBrown-Light.ttf",
+    "ocr": FONT_DIR / "OCRAST.ttf",
+    "swis721BT": FONT_DIR / "swiss721bt.ttf",
+    "swis721BT-Bold": FONT_DIR / "swiss721bold.ttf",
+    "helv": FONT_DIR / "Helvetica.ttf",
+    "helv_bold": FONT_DIR / "helv_bold.ttf",
 }
 
 
