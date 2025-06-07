@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, BackgroundTasks, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from scripts import Binder_Pdf, GaragingProof
 from pathlib import Path
 from zipfile import ZipFile
@@ -15,6 +16,18 @@ app = FastAPI(
     title="PDF Generator API",
     description="API para gerar PDFs de Binder e Garaging Proof",
     version="1.0.0"
+)
+
+origins = [
+    "https://ngs-application-kdj4.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def cleanup_file(file_path: str):
