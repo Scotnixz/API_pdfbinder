@@ -240,6 +240,23 @@ CORDS_BINDER = {
     "lienholder_bool": {"pos": (43.0, 499 - 15 + 54), "fontsize": 12},
     "issued_date": {"pos": (90, 540.5 - 15 + 61.5 + 54), "fontsize": 10},
 },
+"NH": {
+    "full_name": {"pos": (36.0, 122.4), "fontsize": 8},
+    "address": {"pos": (36.0, 135.4), "fontsize": 8},
+    "city_state_zip": {"pos": (36.0, 148.4), "fontsize": 8},
+    "num_policy": {"pos": (430.8, 107.4), "fontsize": 9},
+    "date_exp": {"pos": (427.5, 121), "fontsize": 9},
+    "date_end": {"pos": (434, 134), "fontsize": 9},
+    "vehicle_year": {"pos": (104.6, 280.6 + 24), "fontsize": 10},
+    "vehicle_make": {"pos": (70, 292.5 + 24), "fontsize": 10},
+    "vehicle_model": {"pos": (74, 304.5 + 24), "fontsize": 10},
+    "vehicle_vin": {"pos": (61.5, 316.5 + 24), "fontsize": 10},
+    "lienholder_name": {"pos": (36.0, 515 - 12.5 + 54), "fontsize": 8},
+    "lienholder_street": {"pos": (36.0, 529.5 - 15 + 54), "fontsize": 8},
+    "lienholder_city_state_zip": {"pos": (36.0, 540.5 - 15 + 54), "fontsize": 8},
+    "lienholder_bool": {"pos": (43.0, 499 - 15 + 54), "fontsize": 12},
+    "issued_date": {"pos": (90, 540.5 - 15 + 61.5 + 54), "fontsize": 10},
+    }
 }
 
 FONT_DIR = Path(__file__).parent / "fonts" #Tive que adicionar um caminho variável
@@ -271,6 +288,7 @@ first_numbers_policy = {
 "PA": "6155095",
 "RI": "6162478",
 "ME": "4574231",
+"NH": "4574442",
 }
 #MASACHUSETS
 NATIONAL_GRID_MA = [
